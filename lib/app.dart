@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'home.dart';
 import 'module_10/class_3.dart';
+import 'module_11/class_1.dart';
 
 class MyAPP extends StatelessWidget {
   const MyAPP({super.key});
@@ -10,7 +11,7 @@ class MyAPP extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter 14',
-      home: Class3(),
+      home: Module11Class1(),
     );
   }
 }
