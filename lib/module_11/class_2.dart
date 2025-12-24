@@ -12,7 +12,7 @@ class Module11Class2 extends StatelessWidget {
     final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+
         title: Text('Login'),
       ),
     body: SafeArea(
@@ -32,10 +32,7 @@ class Module11Class2 extends StatelessWidget {
                 width: 250,
               ),
               Text('Login with phone & Password',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w500
-              ),
+              style: Theme.of(context).textTheme.bodySmall
               ),
               SizedBox(height: 20,),
 
@@ -43,7 +40,6 @@ class Module11Class2 extends StatelessWidget {
                 controller: phoneController,
                 decoration: InputDecoration(
                   hintText: 'Phone number',
-                  border: OutlineInputBorder(),
                 ),
                 validator: (value){
                   if(value == null || value.isEmpty){
@@ -81,7 +77,7 @@ class Module11Class2 extends StatelessWidget {
                 width: 300,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
+                      backgroundColor: Colors.red,
                       foregroundColor: Colors.white
                     ),
                     onPressed: (){
@@ -90,8 +86,27 @@ class Module11Class2 extends StatelessWidget {
                         Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
                         // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
                       }
+                    }, child: Text('Login',
+                  style: Theme.of(context).textTheme.bodySmall,
+                )),
+              ),
+              SizedBox(height: 20,),
+              SizedBox(
+                width: 300,
+                child: ElevatedButton(
+
+                    onPressed: (){
+                      if(_formKey.currentState!.validate()){
+
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Home()));
+                      }
                     }, child: Text('Login')),
               ),
+
+              SizedBox(height: 20,),
+
+              ElevatedButton(onPressed: (){}, child: Text('Test')),
 
 
               Stack(

@@ -15,21 +15,18 @@ class Module11Class1 extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+
+
               TextField(
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   helperText: 'Phone number',
                   hintText: 'Enter your Number',
-                  hintStyle: TextStyle(
-                    fontSize: 18
-                  ),
+
                   labelText: 'Phone Number',
                   labelStyle: TextStyle(
                     fontSize: 18
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50)
                   ),
                   
                   prefixIcon: Icon(Icons.phone),
