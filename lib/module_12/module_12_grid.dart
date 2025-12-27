@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class Module12Grid extends StatelessWidget {
   const Module12Grid({super.key});
 
@@ -232,37 +233,31 @@ class Module12Grid extends StatelessWidget {
       //   ],
       //
       // )
-
       body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10
-
-          ),
-
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3, crossAxisSpacing: 10, mainAxisSpacing: 10),
         itemCount: 20,
-        itemBuilder: (context,index){
-            return Column(
-              children: [
-                Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25)
-                  ),
-                  color: Colors.red,
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Icon(Icons.phone,size: 40,color: Colors.white,),
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25)),
+                color: Colors.red,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Icon(
+                    Icons.phone,
+                    size: 40,
+                    color: Colors.white,
                   ),
                 ),
-                Text('Add money')
-              ],
-            );
+              ),
+              Text('Add money')
+            ],
+          );
         },
-
-
-
       ),
     );
   }
