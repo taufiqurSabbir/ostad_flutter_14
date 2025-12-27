@@ -5,6 +5,8 @@ import 'module_10/class_3.dart';
 import 'module_11/class_1.dart';
 import 'module_11/class_2.dart';
 import 'module_11/class_3.dart';
+import 'module_12/class_1.dart';
+import 'module_12/module_12_grid.dart';
 
 class MyAPP extends StatelessWidget {
   const MyAPP({super.key});
@@ -56,7 +58,7 @@ class MyAPP extends StatelessWidget {
       ),
 
       title: 'Flutter 14',
-      home: Module11Class3(),
+      home: Module12Grid(),
     );
   }
 }

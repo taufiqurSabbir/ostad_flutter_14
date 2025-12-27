@@ -1,0 +1,120 @@
+import 'package:flutter/material.dart';
+class Module12Class1 extends StatelessWidget {
+  const Module12Class1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Stack'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+
+            Stack(
+              children: [
+
+                Container(
+                  color: Colors.red,
+                  height: 200,
+                  width: 200,
+                ),
+
+
+                Positioned(
+                  left: 10,
+                  top: 10,
+                  child: Container(
+                    color: Colors.blue,
+                    height: 180,
+                    width: 180,
+                  ),
+                ),
+
+                Positioned(
+                  left: 25,
+                  top: 25,
+                  child: Container(
+                    color: Colors.green,
+                    height: 150,
+                    width: 150,
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 10,),
+            
+            Stack(
+              children: [
+                Image.network('https://images.unsplash.com/photo-1566073771259-6a8506099945',
+                height: 180,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                
+                Container(
+                  height: 180,
+                  color: Colors.black.withOpacity(0.35),
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Positioned(
+                      top: 10,
+                      left: 10,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 4),
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Text('BEST DEAL',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12
+                        ),
+                        ),
+                      ),
+                    ),
+
+                    IconButton(onPressed: (){}, icon: Icon(Icons.favorite_border,color: Colors.white,))
+                  ],
+                ),
+
+
+
+              ],
+            ),
+            SizedBox(height: 10,),
+            Stack(
+              children: [
+                Image.network('https://images.unsplash.com/photo-1566073771259-6a8506099945',
+                height: 300,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+
+                Positioned(
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                  child: ElevatedButton(onPressed: (){}, child: Text('Book Now', style: TextStyle(fontSize: 16),)),
+                ),
+
+
+
+              ],
+            ),
+
+          ],
+        ),
+      ),
+    );
+
+  }
+}
