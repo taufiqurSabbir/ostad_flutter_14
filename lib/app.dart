@@ -10,6 +10,7 @@ import 'module_12/class_2.dart';
 import 'module_12/list_v.dart';
 import 'module_12/module_12_grid.dart';
 import 'module_13/class_1.dart';
+import 'module_13/class_2_alert.dart';
 
 class MyAPP extends StatelessWidget {
   const MyAPP({super.key});
@@ -61,7 +62,7 @@ class MyAPP extends StatelessWidget {
       ),
 
       title: 'Flutter 14',
-      home: Module13Class1(),
+      home: Alert(),
     );
   }
 }
