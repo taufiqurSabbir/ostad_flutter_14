@@ -128,7 +128,9 @@ class Alert extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          print('Test');
+        },
         child: Icon(
           Icons.add,
           color: Colors.white,
