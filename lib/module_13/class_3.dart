@@ -41,6 +41,10 @@ class Module13Class3 extends StatelessWidget {
             return Dismissible(
               key: Key(item['name']!),
 
+              // onDismissed: (direction){
+              //
+              // },
+
               confirmDismiss: (direction)async{
                 if(direction == DismissDirection.startToEnd){
                   ScaffoldMessenger.of(context).showSnackBar(
