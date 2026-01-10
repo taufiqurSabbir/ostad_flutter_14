@@ -134,7 +134,7 @@ class _Module13Class4State extends State<Module13Class4> {
               height: 300,
               width: double.infinity,
               child: AnimatedAlign(
-                alignment: isLogin ? Alignment.topCenter : Alignment.center,
+                alignment: isLogin ? Alignment.topRight : Alignment.center,
                 duration: Duration(milliseconds: 1000),
                 child: CircleAvatar(
                   backgroundImage: NetworkImage(
