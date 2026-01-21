@@ -1,4 +1,6 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'home.dart';
 import 'module_10/class_3.dart';
@@ -18,72 +20,89 @@ import 'module_14/class_1.dart';
 import 'module_14/class_2.dart';
 import 'module_14/class_3.dart';
 import 'module_14/test2.dart';
+import 'module_15/class_!.dart';
 
 class MyAPP extends StatelessWidget {
   const MyAPP({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primaryColor: Colors.deepPurple,
-        primarySwatch: Colors.deepPurple,
-        scaffoldBackgroundColor: Colors.blue.shade50,
-        
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.black,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8)
-            )
-          )
-        ),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_ , child) {
+        return MaterialApp(
+          useInheritedMediaQuery: true,
+          locale: DevicePreview.locale(context),
+          builder: DevicePreview.appBuilder,
+          theme: ThemeData(
 
-        inputDecorationTheme: InputDecorationTheme(
+              brightness: Brightness.light,
+              primaryColor: Colors.deepPurple,
+              primarySwatch: Colors.deepPurple,
+              scaffoldBackgroundColor: Colors.blue.shade50,
 
-            hintStyle: TextStyle(
-                fontSize: 18
-            ),
-            labelStyle: TextStyle(
-                fontSize: 18
-            ),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20)
-            ),
-        ),
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)
+                      )
+                  )
+              ),
 
-        appBarTheme: AppBarTheme(
-            backgroundColor: Colors.blue,
-          centerTitle: true
-        ),
+              inputDecorationTheme: InputDecorationTheme(
 
-          textTheme: TextTheme(
-            bodySmall: TextStyle(fontSize: 18)
-          )
+                hintStyle: TextStyle(
+                    fontSize: 18
+                ),
+                labelStyle: TextStyle(
+                    fontSize: 18
+                ),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20)
+                ),
+              ),
+
+              appBarTheme: AppBarTheme(
+                  backgroundColor: Colors.blue,
+                  centerTitle: true
+              ),
+
+              textTheme: TextTheme(
+                  bodySmall: TextStyle(fontSize: 18)
+              )
 
 
 
 
-      ),
+          ),
 
-      title: 'Flutter 14',
+          title: 'Flutter 14',
 
 
-      routes: {
-        '/home' : (context) => Home(),
-        '/login' : (context) => Module11Class1(),
-        '/size' : (context) => Module11Class3(),
-        '/nvi' : (context) => Module14Class2(),
-        '/bar' : (context) => Module14Class3(),
-        '/test2' : (context){
-          final args = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
-          return Test2(name: args['name'], price: args['price'], onTap: args['onTap']);
-        }
+          routes: {
+            '/home' : (context) => Home(),
+            '/login' : (context) => Module11Class1(),
+            '/size' : (context) => Module11Class3(),
+            '/nvi' : (context) => Module14Class2(),
+            '/bar' : (context) => Module14Class3(),
+            '/bottomNav' : (context) => BottomNav(),
+
+            '/test2' : (context){
+              final args = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
+              return Test2(name: args['name'], price: args['price'], onTap: args['onTap']);
+            }
+          },
+
+          initialRoute: '/size',
+        );
       },
-
-     initialRoute: '/bar',
     );
+
+
+
   }
 }
