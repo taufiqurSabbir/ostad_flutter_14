@@ -21,6 +21,7 @@ import 'module_14/class_2.dart';
 import 'module_14/class_3.dart';
 import 'module_14/test2.dart';
 import 'module_15/class_!.dart';
+import 'module_15/class_2.dart';
 
 class MyAPP extends StatelessWidget {
   const MyAPP({super.key});
@@ -90,6 +91,7 @@ class MyAPP extends StatelessWidget {
             '/nvi' : (context) => Module14Class2(),
             '/bar' : (context) => Module14Class3(),
             '/bottomNav' : (context) => BottomNav(),
+            '/moneyM' : (context) => MoneyManagement(),
 
             '/test2' : (context){
               final args = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
@@ -97,7 +99,7 @@ class MyAPP extends StatelessWidget {
             }
           },
 
-          initialRoute: '/size',
+          initialRoute: '/moneyM',
         );
       },
     );
