@@ -27,6 +27,13 @@ class _TaskHomePageState extends State<TaskHomePage> {
     });
   }
 
+  Future<void> deleteTask(int id) async {
+    await TaskDatabase.deleteTask(id);
+    refreshTask();
+    setState(() {
+    });
+  }
+
   Future<void> addTask() async {
 
     if(controller.text.isNotEmpty){
@@ -35,6 +42,57 @@ class _TaskHomePageState extends State<TaskHomePage> {
       refreshTask();
     }
   }
+
+  Future<void> toggleTaskStatus(Task task) async {
+    await TaskDatabase.updateTask(Task(
+      id: task.id,
+      title: task.title,
+      isDone: !task.isDone,
+    ));
+    refreshTask();
+    setState(() {
+    });
+  }
+
+
+  Future<void> editTask(Task task) async {
+    TextEditingController editTaskController = TextEditingController();
+    editTaskController.text = task.title;
+    showDialog(context: context, builder: (BuildContext contex){
+      return AlertDialog(
+        title: Text('EDIT Task'),
+        content: TextField(
+          controller: editTaskController,
+          decoration: InputDecoration(hintText: 'Edit task'),
+        ),
+        actions: [
+          TextButton(onPressed: (){
+            Navigator.pop(context);
+          }, child: Text('Cancel')),
+
+          TextButton(onPressed: () async {
+            await TaskDatabase.updateTask(Task(
+              id: task.id,
+              title: editTaskController.text,
+              isDone: task.isDone,
+            ));
+
+            refreshTask();
+            setState(() {
+            });
+
+            Navigator.pop(context);
+
+          }, child: Text('Save'))
+        ],
+      );
+    });
+    
+    
+
+
+  }
+
 
 
   @override
@@ -69,13 +127,19 @@ class _TaskHomePageState extends State<TaskHomePage> {
                   final task = tasks[index];
                   return Card(
                     child: ListTile(
-                      leading: Checkbox(value: task.isDone, onChanged: (_){},),
-                      title: Text(task.title),
+                      leading: Checkbox(value: task.isDone, onChanged: (_)=>toggleTaskStatus(task),),
+                      title: Text(task.title,
+                      style: TextStyle(
+                          decoration:task.isDone ? TextDecoration.lineThrough : TextDecoration.none,
+                        color: task.isDone ? Colors.grey : Colors.black
+                      ),
+
+                      ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
-                          IconButton(onPressed: (){}, icon: Icon(Icons.delete,color: Colors.red,))
+                          IconButton(onPressed: ()=>editTask(task), icon: Icon(Icons.edit)),
+                          IconButton(onPressed: ()=> deleteTask(task.id!), icon: Icon(Icons.delete,color: Colors.red,))
                         ],
                       ),
                     ),
