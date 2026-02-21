@@ -39,6 +39,8 @@ dependencies:
   device_preview:
   sqflite:
   path:
+  http: ^1.6.0
+
 
 dev_dependencies:
   flutter_test:
