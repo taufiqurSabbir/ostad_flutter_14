@@ -34,4 +34,72 @@ class ProductController{
     }
   }
 
+  Future<bool>createProducts(Data data)async {
+    final url = Uri.parse(Urls.createProduct);
+
+    final response = await http.post(url,
+
+    headers: {
+      'Content-Type' : 'application/json'
+    },
+
+    body: jsonEncode(
+
+        {
+          "ProductName": data.productName,
+          "ProductCode": DateTime.now().microsecondsSinceEpoch,
+          "Img": data.img,
+          "Qty": data.qty,
+          "UnitPrice": data.unitPrice,
+          "TotalPrice": data.totalPrice
+        }
+    ),
+
+    );
+
+
+
+
+    if(response.statusCode == 200){
+      getProducts();
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  Future<bool>updateProducts(String productID, Data data)async {
+    final url = Uri.parse(Urls.updateProduct(productID));
+
+    final response = await http.post(url,
+
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+
+      body: jsonEncode(
+
+          {
+            "ProductName": data.productName,
+            "ProductCode": DateTime.now().microsecondsSinceEpoch,
+            "Img": data.img,
+            "Qty": data.qty,
+            "UnitPrice": data.unitPrice,
+            "TotalPrice": data.totalPrice
+          }
+      ),
+
+    );
+
+
+
+
+    if(response.statusCode == 200){
+      getProducts();
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 }

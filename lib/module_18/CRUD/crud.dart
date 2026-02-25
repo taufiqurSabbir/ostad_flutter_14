@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_14/module_18/CRUD/controller/productcontroller.dart';
+import 'package:flutter_14/module_18/CRUD/model/productModel.dart';
 import 'package:http/http.dart' as http;
 
 class Crud extends StatefulWidget {
@@ -18,9 +19,116 @@ class _CrudState extends State<Crud> {
   Future fetchData() async {
    await productController.getProducts();
 
-   setState(() {
+   if(mounted) {
+     setState(() {
 
    });
+   }
+
+
+  }
+  
+  
+  productDialog(bool isUpdate , {Data? data}){
+
+    TextEditingController productNameController = TextEditingController();
+    TextEditingController productIMGController = TextEditingController();
+    TextEditingController productQTYController = TextEditingController();
+    TextEditingController productUnitPriceController = TextEditingController();
+    TextEditingController productTotalPriceController = TextEditingController();
+
+
+    if(isUpdate){
+      productNameController.text = data!.productName.toString();
+      productIMGController.text = data.img.toString();
+      productQTYController.text = data.qty.toString();
+      productUnitPriceController.text = data.unitPrice.toString();
+      productUnitPriceController.text = data.totalPrice.toString();
+    }
+
+    showDialog(context: context, builder: (context)=>AlertDialog(
+        title: Text(isUpdate ? 'Update Product' :'Add product'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: productNameController,
+              decoration: InputDecoration(
+                labelText: 'Name'
+              ),
+            ),
+            SizedBox(height: 10,),
+        
+            TextField(
+              controller: productIMGController,
+        
+              decoration: InputDecoration(
+                  labelText: 'Image'
+              ),
+            ),
+            SizedBox(height: 10,),
+        
+            TextField(
+              controller: productQTYController,
+              decoration: InputDecoration(
+                  labelText: 'QTY'
+              ),
+            ),
+            SizedBox(height: 10,),
+        
+            TextField(
+              controller: productUnitPriceController,
+              decoration: InputDecoration(
+                  labelText: 'Unit price'
+              ),
+            ),
+            SizedBox(height: 10,),
+        
+            TextField(
+              controller: productTotalPriceController,
+              decoration: InputDecoration(
+                  labelText: 'Total price'
+              ),
+            ),
+            SizedBox(height: 10,),
+            
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(onPressed: (){
+                  Navigator.pop(context);
+                }, child: Text('Cancle')),
+        
+                ElevatedButton(onPressed: () async {
+                  if(isUpdate){
+                    productController.updateProducts(data!.sId.toString(),Data(
+                        productName: productNameController.text,
+                        img: productIMGController.text,
+                        qty: int.parse(productQTYController.text),
+                        unitPrice: int.parse(productUnitPriceController.text),
+                        totalPrice: int.parse(productTotalPriceController.text)
+                    ));
+                  }else{
+                    productController.createProducts(Data(
+                        productName: productNameController.text,
+                        img: productIMGController.text,
+                        qty: int.parse(productQTYController.text),
+                        unitPrice: int.parse(productUnitPriceController.text),
+                        totalPrice: int.parse(productTotalPriceController.text)
+                    ));
+                  }
+        
+                  await fetchData();
+                  Navigator.pop(context);
+        
+                }, child: Text('Submit')),
+              ],
+            )
+          ],
+        ),
+      ),
+    ));
   }
 
 
@@ -46,7 +154,7 @@ class _CrudState extends State<Crud> {
         ),
         itemCount: productController.products.length,
         itemBuilder: (context,index){
-          final item = ProductController().products[index];
+          final item = productController.products[index];
           return Card(
             child: Container(
               child: Column(
@@ -61,12 +169,15 @@ class _CrudState extends State<Crud> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
                     children: [
-                      IconButton(onPressed: (){}, icon: Icon(Icons.edit, color: Colors.orange,)),
                       IconButton(onPressed: (){
-                        productController.deleteProducts(item.sId.toString()).then((value){
-
+                        productDialog(true,data: item);
+                      }, icon: Icon(Icons.edit, color: Colors.orange,)),
+                      IconButton(onPressed: (){
+                        productController.deleteProducts(item.sId.toString()).then((value) async {
+                          await fetchData();
                           if(value){
                             ScaffoldMessenger.of(context).showSnackBar(
+
                               SnackBar(content: Text('Product deleted'))
                             );
                           }else{
@@ -74,6 +185,7 @@ class _CrudState extends State<Crud> {
                                 SnackBar(content: Text('Something wrong...!'))
                             );
                           }
+
 
                         });
 
@@ -89,6 +201,9 @@ class _CrudState extends State<Crud> {
         },
 
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        productDialog(false);
+      },child: Icon(Icons.add),),
     );
   }
 }
