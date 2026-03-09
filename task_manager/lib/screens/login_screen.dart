@@ -5,6 +5,7 @@ import 'package:task_manager/utils/app_colors.dart';
 
 import '../widgets/screen_background.dart';
 import 'forget_password_email_verify.dart';
+import 'main_nav_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,9 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(30),
-        child: ScreenBackground(
+      body: ScreenBackground(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,7 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: InputDecoration(hintText: 'Password'),
               ),
               FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MainNavScreen()));
+                  },
                   child: Icon(Icons.arrow_circle_right_outlined)),
 
               SizedBox(height: 35,),

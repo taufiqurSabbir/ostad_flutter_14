@@ -1,19 +1,22 @@
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:task_manager/screens/sign_up_screen.dart';
-import 'package:task_manager/utils/app_colors.dart';
 
+
+import '../utils/app_colors.dart';
 import '../widgets/screen_background.dart';
-import 'forget_password_ptp_verification.dart';
+import 'forget_password_set_password.dart';
 
-class ForgetPasswordEmailVerify extends StatefulWidget {
-  const ForgetPasswordEmailVerify({super.key});
+class ForgetPasswordOtpVerification extends StatefulWidget {
+  const ForgetPasswordOtpVerification({super.key});
 
   @override
-  State<ForgetPasswordEmailVerify> createState() => _ForgetPasswordEmailVerifyState();
+  State<ForgetPasswordOtpVerification> createState() => _ForgetPasswordOtpVerificationState();
 }
 
-class _ForgetPasswordEmailVerifyState extends State<ForgetPasswordEmailVerify> {
+class _ForgetPasswordOtpVerificationState extends State<ForgetPasswordOtpVerification> {
   void _onTapSignUp(){
     Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
   }
@@ -30,19 +33,38 @@ class _ForgetPasswordEmailVerifyState extends State<ForgetPasswordEmailVerify> {
                 height: 150,
               ),
               Text(
-                'Your email address',
+                'PIN Verification',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               SizedBox(
                 height: 25,
               ),
-              TextFormField(
-                decoration: InputDecoration(hintText: 'Email'),
+
+              PinCodeTextField(
+                  appContext: context,
+                  length: 6,
+                obscureText: true,
+                animationType: AnimationType.fade,
+                keyboardType: TextInputType.number,
+                pinTheme: PinTheme(
+                  shape: PinCodeFieldShape.box,
+                  borderRadius: BorderRadius.circular(7),
+                  fieldHeight: 50,
+                  fieldWidth: 40,
+                  activeFillColor: Colors.white,
+                  inactiveColor: Colors.grey.shade300,
+                  selectedColor: AppColors.Pcolor
+                ),
+                backgroundColor: Colors.transparent,
+
               ),
+
+
+
               SizedBox(height: 20,),
               FilledButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPasswordOtpVerification()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgetPasswordSetPassword()));
                   },
                   child: Icon(Icons.arrow_circle_right_outlined)),
 
@@ -52,7 +74,7 @@ class _ForgetPasswordEmailVerifyState extends State<ForgetPasswordEmailVerify> {
                     text: " have an account? ",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w500),
                     children: [
                       TextSpan(
-                          text: 'Login', style: TextStyle(color: AppColors.Pcolor,fontWeight: FontWeight.bold),
+                          text: 'Sign in', style: TextStyle(color: AppColors.Pcolor,fontWeight: FontWeight.bold),
                           recognizer: TapGestureRecognizer()..onTap = _onTapSignUp
                       )
                     ]
