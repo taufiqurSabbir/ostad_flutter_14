@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:task_manager/widgets/tm_appbar.dart';
 
+import '../widgets/task_card.dart';
 import '../widgets/task_count_by_status.dart';
 
 class NewTaskScreen extends StatefulWidget {
@@ -31,8 +32,23 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
             ),
           ),
 
+
+          Expanded(
+            child: ListView.separated(
+            
+                itemBuilder: (context,index){
+                  return  TaskCard();
+                },
+                separatorBuilder: (context,index){
+                  return Divider();
+                }, itemCount: 10),
+          )
+
+
+
         ],
       ),
     );
   }
 }
+
