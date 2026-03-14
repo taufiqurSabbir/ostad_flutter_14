@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/Controller/auth_controller.dart';
 
 class TmAppbar extends StatelessWidget implements PreferredSize {
   const TmAppbar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final profilePic = AuthController.userModel!.photo;
+
     return AppBar(
       backgroundColor: Colors.green,
       title: Row(
@@ -12,7 +15,7 @@ class TmAppbar extends StatelessWidget implements PreferredSize {
           CircleAvatar(
             radius:25,
             backgroundImage: NetworkImage(
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrN3fMD9X1_p5b6lRSCGcpDtH9BcgEOsEZLg&s'
+                profilePic
 
             ),
           ),
@@ -21,12 +24,12 @@ class TmAppbar extends StatelessWidget implements PreferredSize {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Taufiqur Sabbir',
+              Text('${AuthController.userModel!.firstName}  ${AuthController.userModel!.lastName}',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 color: Colors.white
               ),
               ),
-              Text('taufiqur2511@gmail.com',
+              Text(AuthController.userModel!.email,
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white
               ),

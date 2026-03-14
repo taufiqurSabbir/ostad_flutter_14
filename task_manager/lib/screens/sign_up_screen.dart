@@ -1,9 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager/data/models/api_response.dart';
+import 'package:task_manager/data/services/api_caller.dart';
 import 'package:task_manager/screens/login_screen.dart';
 import 'package:task_manager/screens/sign_up_screen.dart';
 import 'package:task_manager/utils/app_colors.dart';
 
+import '../utils/urls.dart';
 import '../widgets/screen_background.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -20,7 +23,50 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+bool isLoading = false;
 
+_clearTextField(){
+  _emailController.clear();
+  _firstNameController.clear();
+  _lastNameController.clear();
+  _mobileController.clear();
+  _passwordController.clear();
+}
+
+  Future <void> _signUp() async {
+    Map<String,dynamic> requestBody = {
+
+
+        "email":_emailController.text,
+        "firstName":_firstNameController.text,
+        "lastName":_lastNameController.text,
+        "mobile":_mobileController.text,
+        "password":_passwordController.text,
+
+
+    };
+
+    setState(() {
+      isLoading = true;
+    });
+    
+    final ApiResponse response = await ApiCaller.PostRequest(
+        URL: Urls.SignUpURL,
+        body: requestBody,
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if(response.isSuccess){
+      _clearTextField();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sign up success..!')));
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.responseData['data'])));
+
+    }
+  }
 
   void _onTaplogin(){
     Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
@@ -120,10 +166,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }
                     },
                   ),
-                  FilledButton(
+                  isLoading ? Center(child: CircularProgressIndicator()) : FilledButton(
                       onPressed: () {
                         if(_formKey.currentState!.validate()){
-
+                            _signUp();
                         }
                       },
                       child: Icon(Icons.arrow_circle_right_outlined)),
