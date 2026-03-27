@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:logger/logger.dart';
+import 'package:task_manager/Controller/auth_controller.dart';
 
 import '../models/api_response.dart';
 
@@ -14,7 +15,7 @@ class ApiCaller{
             _logRequest(URL);
             Uri uri = Uri.parse(URL);
             Response response =await get(uri,headers: {
-                'token' : ''
+                'token' : AuthController.accessToken ?? ''
             });
 
             _logger.i(response.body);
@@ -42,7 +43,7 @@ class ApiCaller{
             Response response =await post(uri,headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                'token' : ''
+                'token' : AuthController.accessToken ?? ''
             },
             body: body != null ? jsonEncode(body) : null,
             );
