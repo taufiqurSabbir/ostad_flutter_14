@@ -39,7 +39,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   Future<void> pickImage() async {
     final XFile? image =
-        await _imagePicker.pickImage(source: ImageSource.camera);
+        await _imagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       _selectedImage = image;
       setState(() {});
