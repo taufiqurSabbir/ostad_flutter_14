@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager/widgets/tm_appbar.dart';
+
+import '../data/models/task_model.dart';
+import '../data/services/api_caller.dart';
+import '../utils/urls.dart';
+import '../widgets/task_card.dart';
 
 class CompletedTaskScreen extends StatefulWidget {
   const CompletedTaskScreen({super.key});
@@ -8,8 +14,64 @@ class CompletedTaskScreen extends StatefulWidget {
 }
 
 class _CompletedTaskScreenState extends State<CompletedTaskScreen> {
+  List<TaskModel> TaskList = [];
+
+
+  Future<void>getProgressTask() async {
+
+    final response = await ApiCaller.getRequest(URL: Urls.TaskByStatusURL('Completed'));
+
+    List<TaskModel> taskList = [];
+
+    setState(() {
+
+    });
+
+    if(response.isSuccess){
+      for(Map<String,dynamic>jsonData in response.responseData['data']){
+        taskList.add(TaskModel.fromJson(jsonData));
+      }
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.responseData['data'])));
+
+    }
+
+    TaskList = taskList;
+
+
+
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getProgressTask();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: TmAppbar(),
+      body: ListView.separated(
+        itemCount: TaskList.length,
+        itemBuilder: (context,index){
+          return TaskCard(taskModel: TaskList[index],
+            cardColor: Colors.green,
+            refreshParent: () {  },
+
+
+          );
+        },
+        separatorBuilder: (context,index){
+          return SizedBox(
+            height: 4,
+          );
+        },
+      ),
+    );
   }
 }
