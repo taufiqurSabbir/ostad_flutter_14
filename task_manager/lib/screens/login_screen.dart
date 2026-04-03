@@ -1,16 +1,23 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_manager/Controller/auth_controller.dart';
 import 'package:task_manager/data/models/user_model.dart';
+import 'package:task_manager/main.dart';
+import 'package:task_manager/providers/auth_provider.dart';
 import 'package:task_manager/screens/sign_up_screen.dart';
 import 'package:task_manager/utils/app_colors.dart';
 
 import '../data/models/api_response.dart';
 import '../data/services/api_caller.dart';
+import '../providers/auth_provider.dart';
 import '../utils/urls.dart';
 import '../widgets/screen_background.dart';
+import '../widgets/showSnackBar.dart';
 import 'forget_password_email_verify.dart';
 import 'main_nav_screen.dart';
+
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,52 +28,29 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool isLoading = false;
 
-  Future <void> _signIn() async {
-    Map<String,dynamic> requestBody = {
-
-
-      "email":_emailController.text,
-      "password":_passwordController.text,
-
-
-    };
-
-    setState(() {
-      isLoading = true;
-    });
-
-    final ApiResponse response = await ApiCaller.PostRequest(
-      URL: Urls.LoginUrl,
-      body: requestBody,
-    );
-
-    setState(() {
-      isLoading = false;
-    });
-
-    if(response.isSuccess){
-      UserModel model = UserModel.fromJson(response.responseData['data']);
-      String accessToken = response.responseData['token'];
-
-      AuthController.saveUserData(model, accessToken);
-
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MainNavScreen()));
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Sign In success..!')));
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.responseData['data'])));
-
-    }
-  }
 
 
   void _onTapSignUp(){
     Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUpScreen()));
+}
+
+
+Future<void> _signIn() async {
+    final authProvider = context.read<AuthProvider>();
+
+    final bool success = await authProvider.signIn(_emailController.text, _passwordController.text);
+
+    if(success){
+      showSnackbar(context,'Login success...!');
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>MainNavScreen()));
+    }else{
+      showSnackbar(context,authProvider.errorMessage.toString());
+
+    }
+
 }
   @override
   Widget build(BuildContext context) {

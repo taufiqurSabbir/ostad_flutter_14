@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_14/pctc_provider/pctc_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'home.dart';
@@ -96,6 +97,7 @@ class MyAPP extends StatelessWidget {
             '/moneyM' : (context) => MoneyManagement(),
             '/task' : (context) => TaskHomePage(),
             '/Crud' : (context) => Crud(),
+            '/PctcProvider' : (context) => PctcProvider(),
 
             '/test2' : (context){
               final args = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
@@ -103,7 +105,7 @@ class MyAPP extends StatelessWidget {
             }
           },
 
-          initialRoute: '/Crud',
+          initialRoute: '/PctcProvider',
         );
       },
     );
