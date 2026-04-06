@@ -22,10 +22,9 @@ class _CancelTaskScreenState extends State<CancelTaskScreen> {
     // TODO: implement initState
     super.initState();
 
-    Future.microtask((){
+
       final provider = Provider.of<TaskProvider>(context,listen: false);
       provider.fetchTaskByStatus('Cancelled');
-    });
   }
 
 
@@ -36,7 +35,7 @@ class _CancelTaskScreenState extends State<CancelTaskScreen> {
       body:  Consumer<TaskProvider>(
           builder: (context, taskProvider, _){
             return ListView.separated(
-              itemCount: taskProvider.completeTask.length,
+              itemCount: taskProvider.cancelledTask.length,
               itemBuilder: (context,index){
                 return TaskCard(
                   taskModel: taskProvider.cancelledTask[index],

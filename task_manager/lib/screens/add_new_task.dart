@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task_manager/widgets/screen_background.dart';
 import 'package:task_manager/widgets/tm_appbar.dart';
 
 import '../data/models/api_response.dart';
 import '../data/services/api_caller.dart';
+import '../providers/task_provider.dart';
 import '../utils/urls.dart';
 import 'main_nav_screen.dart';
 class AddNewTask extends StatefulWidget {
@@ -73,15 +75,25 @@ class _AddNewTaskState extends State<AddNewTask> {
                 },
               ),
 
-              FilledButton(
-                  onPressed: () {
-                    if(_formKey.currentState!.validate()){
-                      addNewTask();
+              Consumer<TaskProvider>(
+                builder: (context,taskProvider,_) {
 
-                    }
 
-                  },
-                  child: Icon(Icons.arrow_circle_right_outlined)),
+                  return taskProvider.isLoading ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  ) : FilledButton(
+
+                      onPressed: () {
+                        if(_formKey.currentState!.validate()){
+                          addNewTask();
+
+                        }
+
+                      },
+                      child: Icon(Icons.arrow_circle_right_outlined));
+                }
+              ),
 
             ],
           ),
@@ -91,36 +103,15 @@ class _AddNewTaskState extends State<AddNewTask> {
   }
 
   Future <void> addNewTask() async {
-    Map<String,dynamic> requestBody = {
+    final taskProvider = context.read<TaskProvider>();
+    final bool success =await taskProvider.addTask(titleController.text, descriptionController.text);
 
-
-      "title": titleController.text,
-      "description":descriptionController.text,
-      "status":"New"
-
-
-
-    };
-
-    setState(() {
-      isLoading = true;
-    });
-
-    final ApiResponse response = await ApiCaller.PostRequest(
-      URL: Urls.AddTaskURL,
-      body: requestBody,
-    );
-
-    setState(() {
-      isLoading = false;
-    });
-
-    if(response.isSuccess){
+    if(success){
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Task added..!')));
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>MainNavScreen()), (predicate)=>false);
     }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.responseData['data'])));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(taskProvider.errorMessage.toString())));
 
     }
   }
