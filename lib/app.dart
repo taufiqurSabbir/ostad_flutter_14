@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_14/pctc_provider/pctc_provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'google_map/google_map.dart';
 import 'home.dart';
 import 'module_10/class_3.dart';
 import 'module_11/class_1.dart';
@@ -98,6 +99,7 @@ class MyAPP extends StatelessWidget {
             '/task' : (context) => TaskHomePage(),
             '/Crud' : (context) => Crud(),
             '/PctcProvider' : (context) => PctcProvider(),
+            '/GoogleMap23' : (context) => GoogleMap23(),
 
             '/test2' : (context){
               final args = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
@@ -105,7 +107,7 @@ class MyAPP extends StatelessWidget {
             }
           },
 
-          initialRoute: '/PctcProvider',
+          initialRoute: '/GoogleMap23',
         );
       },
     );
